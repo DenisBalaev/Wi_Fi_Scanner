@@ -56,13 +56,19 @@ class MainActivity2 : AppCompatActivity() {
         wifi!!.startScan()
         val wifiList = wifi!!.scanResults
 
-        for (item in wifiList){
+        wifiList.filter {
+            it.SSID == networkSSID
+        }.map {
+            connect5(it,wifi!!)
+        }
+
+        /*for (item in wifiList){
             if (item.SSID == networkSSID){
-                connect5(item,wifi!!)
-                //connect4(item)
+                //connect5(item,wifi!!)
+                connect4(item)
                 break
             }
-        }
+        }*/
 
         //connect2()
     }
@@ -114,7 +120,19 @@ class MainActivity2 : AppCompatActivity() {
             wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP)
             wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.RSN)
             wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.WPA)
-        } else {
+        }else if (securityMode.equals("WPA", ignoreCase = true)) {
+            wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.RSN)
+            wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.WPA)
+            wifiConfiguration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
+            wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP)
+            wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP)
+            wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40)
+            wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104)
+            wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP)
+            wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP)
+            wifiConfiguration.preSharedKey = "\"" + networkPass + "\""
+        }
+        else {
             Log.i(TAG, "# Unsupported security mode: $securityMode")
             return null
         }
@@ -123,8 +141,8 @@ class MainActivity2 : AppCompatActivity() {
 
     private fun getScanResultSecurity(scanResult: ScanResult): String {
         val cap = scanResult.capabilities
-        //val securityModes = arrayOf("WEP", "PSK", "EAP","WPA","WPS")
-        val securityModes = arrayOf("WEP", "PSK", "EAP")
+        val securityModes = arrayOf("WEP", "PSK", "EAP","WPA")
+        //val securityModes = arrayOf("WEP", "PSK", "EAP")
         for (i in securityModes.indices.reversed()) {
             if (cap.contains(securityModes[i])) {
                 Log.i(TAG, "${securityModes[i]}")
