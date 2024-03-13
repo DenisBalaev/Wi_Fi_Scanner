@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.net.wifi.ScanResult
@@ -17,6 +18,7 @@ import android.net.wifi.WifiManager
 import android.net.wifi.WifiNetworkSpecifier
 import android.os.Build
 import android.os.Bundle
+import android.os.PatternMatcher
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
@@ -60,6 +62,7 @@ class MainActivity2 : AppCompatActivity() {
             it.SSID == networkSSID
         }.map {
             connect5(it,wifi!!)
+            Toast.makeText(this@MainActivity2,"start fun connect",Toast.LENGTH_SHORT).show()
         }
 
         /*for (item in wifiList){
@@ -71,6 +74,40 @@ class MainActivity2 : AppCompatActivity() {
         }*/
 
         //connect2()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun connectToWiFi(pin: String, ssid:String) {
+        val connectivityManager =
+            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as
+                    ConnectivityManager
+        val specifier = WifiNetworkSpecifier.Builder()
+            .setSsid(ssid)
+            .setWpa2Passphrase(pin)
+            .setSsidPattern(PatternMatcher(ssid, PatternMatcher.PATTERN_PREFIX))
+            .build()
+        val request = NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .removeCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .setNetworkSpecifier(specifier)
+            .build()
+        val networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                //showToast(context,context.getString(R.string.connection_success))
+            }
+
+            override fun onUnavailable() {
+                super.onUnavailable()
+                //showToast(context,context.getString(R.string.connection_fail))
+            }
+
+            override fun onLost(network: Network) {
+                super.onLost(network)
+                //showToast(context,context.getString(R.string.out_of_range))
+            }
+        }
+        connectivityManager.requestNetwork(request, networkCallback)
     }
 
     private fun connect5(result:ScanResult,wifiManager:WifiManager){
@@ -302,18 +339,21 @@ class MainActivity2 : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun requestPermissions() {
-        if (ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
-            && ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
+            && ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.CHANGE_WIFI_STATE) == PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-            && ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.CHANGE_WIFI_STATE) == PackageManager.PERMISSION_GRANTED){
+            && ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ){
             Toast.makeText(this@MainActivity2,"Connect Start",Toast.LENGTH_SHORT).show()
         }else{
             requestCameraPermissionLauncher.launch(
                 arrayOf(
-                    Manifest.permission.ACCESS_WIFI_STATE,
                     Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+                    Manifest.permission.CHANGE_WIFI_STATE,
                     Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.CHANGE_WIFI_STATE
+                    Manifest.permission.ACCESS_COARSE_LOCATION
                 )
             )
         }
