@@ -43,7 +43,8 @@ class MainActivity2 : AppCompatActivity() {
 
     var TAG = "TAG_WI_FI_CONNECT"
 
-    @RequiresApi(Build.VERSION_CODES.Q)
+
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
@@ -142,12 +143,20 @@ class MainActivity2 : AppCompatActivity() {
         if (securityMode.equals("OPEN", ignoreCase = true)) {
             wifiConfiguration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE)
         } else if (securityMode.equals("WEP", ignoreCase = true)) {
-            wifiConfiguration.wepKeys[0] = "\"" + networkPasskey + "\""
+            /*wifiConfiguration.wepKeys[0] = "\"" + networkPasskey + "\""
             wifiConfiguration.wepTxKeyIndex = 0
             wifiConfiguration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE)
-            wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40)
+            wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40)*/
+
+            wifiConfiguration.apply {
+                wepKeys[0] = "\"" + networkPasskey + "\""
+                wepTxKeyIndex = 0
+                allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE)
+                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40)
+            }
+
         } else if (securityMode.equals("PSK", ignoreCase = true)) {
-            wifiConfiguration.preSharedKey = "\"" + networkPasskey + "\""
+            /*wifiConfiguration.preSharedKey = "\"" + networkPasskey + "\""
             wifiConfiguration.hiddenSSID = true
             wifiConfiguration.status = WifiConfiguration.Status.ENABLED
             wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP)
@@ -156,9 +165,22 @@ class MainActivity2 : AppCompatActivity() {
             wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP)
             wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP)
             wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.RSN)
-            wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.WPA)
+            wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.WPA)*/
+
+            wifiConfiguration.apply {
+                preSharedKey = "\"" + networkPasskey + "\""
+                hiddenSSID = true
+                status = WifiConfiguration.Status.ENABLED
+                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP)
+                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP)
+                allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
+                allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP)
+                allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP)
+                allowedProtocols.set(WifiConfiguration.Protocol.RSN)
+                allowedProtocols.set(WifiConfiguration.Protocol.WPA)
+            }
         }else if (securityMode.equals("WPA", ignoreCase = true)) {
-            wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.RSN)
+            /*wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.RSN)
             wifiConfiguration.allowedProtocols.set(WifiConfiguration.Protocol.WPA)
             wifiConfiguration.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
             wifiConfiguration.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP)
@@ -167,7 +189,20 @@ class MainActivity2 : AppCompatActivity() {
             wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104)
             wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP)
             wifiConfiguration.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP)
-            wifiConfiguration.preSharedKey = "\"" + networkPass + "\""
+            wifiConfiguration.preSharedKey = "\"" + networkPass + "\""*/
+
+            wifiConfiguration.apply {
+                allowedProtocols.set(WifiConfiguration.Protocol.RSN)
+                allowedProtocols.set(WifiConfiguration.Protocol.WPA)
+                allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK)
+                allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP)
+                allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP)
+                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40)
+                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104)
+                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP)
+                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP)
+                preSharedKey = "\"" + networkPass + "\""
+            }
         }
         else {
             Log.i(TAG, "# Unsupported security mode: $securityMode")
