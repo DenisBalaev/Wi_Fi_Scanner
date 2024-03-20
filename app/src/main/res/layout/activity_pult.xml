@@ -135,6 +135,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title_control_temperature"
         app:layout_constraintBottom_toTopOf="@+id/tv_installation_status"
+        android:layout_marginBottom="10dp"
         />
 
     <TextView
@@ -147,8 +148,10 @@
         android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_general_temperature"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="0.8"
         app:layout_constraintStart_toEndOf="@+id/tv_general_temperature"
-        app:layout_constraintHorizontal_bias="1"/>
+        app:layout_constraintTop_toTopOf="@+id/tv_general_temperature" />
 
     <ImageView
         android:id="@+id/iv_type_temperature"
