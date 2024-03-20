@@ -42,6 +42,13 @@ class PultActivity : AppCompatActivity(R.layout.activity_pult) {
                     viewBinding.ivTemperatureRwt.setColorFilter(ContextCompat.getColor(this@PultActivity, it), android.graphics.PorterDuff.Mode.MULTIPLY)
                     viewBinding.ivTemperatureAirRet.setColorFilter(ContextCompat.getColor(this@PultActivity, it), android.graphics.PorterDuff.Mode.MULTIPLY)
                     viewBinding.ivTemperatureAirEat.setColorFilter(ContextCompat.getColor(this@PultActivity, it), android.graphics.PorterDuff.Mode.MULTIPLY)
+
+                    viewBinding.ivFan.setColorFilter(ContextCompat.getColor(this@PultActivity, it), android.graphics.PorterDuff.Mode.MULTIPLY)
+                    viewBinding.ivModeLiquidExchanger.setColorFilter(ContextCompat.getColor(this@PultActivity, it), android.graphics.PorterDuff.Mode.MULTIPLY)
+                    viewBinding.ivDxCooling.setColorFilter(ContextCompat.getColor(this@PultActivity, it), android.graphics.PorterDuff.Mode.MULTIPLY)
+                    viewBinding.ivCirculationPump.setColorFilter(ContextCompat.getColor(this@PultActivity, it), android.graphics.PorterDuff.Mode.MULTIPLY)
+                    viewBinding.ivAirDampers.setColorFilter(ContextCompat.getColor(this@PultActivity, it), android.graphics.PorterDuff.Mode.MULTIPLY)
+                    viewBinding.ivRecirculator.setColorFilter(ContextCompat.getColor(this@PultActivity, it), android.graphics.PorterDuff.Mode.MULTIPLY)
                     delay(1000)
                 }
         }
