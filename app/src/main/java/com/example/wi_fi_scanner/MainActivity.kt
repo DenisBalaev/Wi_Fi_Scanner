@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.wifi.ScanResult
 import android.net.wifi.WifiManager
 import android.os.Bundle
@@ -14,9 +15,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.wi_fi_scanner.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +31,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        startActivity(Intent(this@MainActivity,MainActivity2::class.java))
+        startActivity(Intent(this@MainActivity,MainActivity3::class.java))
+        finish()
 
         binding.fab.setOnClickListener {
             detectWifi()
@@ -42,7 +42,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun detectWifi() {
         wifiManager = this.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        wifiManager!!.startScan()
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("android.net.wifi.SCAN_RESULTS")
+        //registerReceiver(WifiScanReceiver(wifiManager!!), intentFilter)
+
         wifiList = wifiManager!!.scanResults
         Log.d("TAG", wifiList.toString())
         nets = mutableListOf()

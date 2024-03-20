@@ -1,7 +1,6 @@
 package com.example.wi_fi_scanner
 
 import android.Manifest
-import android.R
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -36,15 +35,32 @@ class MainActivity2 : AppCompatActivity() {
     var lv: ListView? = null
     var wifi: WifiManager? = null
     lateinit var wifis: MutableList<String>
-    var wifiReciever: WifiScanReceiver? = null
-
-    var networkSSID = "MGTS_GPON5_1767"
-    var networkPass = "ABFXKVEZ"
+    //var wifiReciever: WifiScanReceiver? = null
 
     var TAG = "TAG_WI_FI_CONNECT"
 
+    val wifiReciever = object : BroadcastReceiver() {
 
-    @RequiresApi(Build.VERSION_CODES.M)
+        override fun onReceive(context: Context, intent: Intent) {
+            val success = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)
+            if (success) {
+                scanSuccess()
+            } else {
+                scanFailure()
+            }
+        }
+
+        private fun scanFailure() {
+            TODO("Not yet implemented")
+        }
+
+        private fun scanSuccess() {
+            TODO("Not yet implemented")
+        }
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMain2Binding.inflate(layoutInflater)
@@ -52,30 +68,37 @@ class MainActivity2 : AppCompatActivity() {
 
         requestPermissions()
 
+        startActivity(Intent(this@MainActivity2,MainActivity3::class.java))
+
         lv=binding.listView
         wifi = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         enableWifi()
-        wifiReciever = WifiScanReceiver()
-        wifi!!.startScan()
+        ////////////
+        ////////////
+
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        registerReceiver(wifiReciever, intentFilter)
+
+        val success = wifi!!.startScan()
         val wifiList = wifi!!.scanResults
 
+        val android10 = WifiAndroid10(this@MainActivity2)
         wifiList.filter {
             it.SSID == networkSSID
         }.map {
-            connect5(it,wifi!!)
-            Toast.makeText(this@MainActivity2,"start fun connect",Toast.LENGTH_SHORT).show()
+            /*connect5(it,wifi!!)
+            Toast.makeText(this@MainActivity2,"start fun connect",Toast.LENGTH_SHORT).show()*/
+            //android10.connecting(ssid = networkSSID, password = networkPass)
+            connect5(it, wifiManager = wifi!!)
         }
-
-        /*for (item in wifiList){
-            if (item.SSID == networkSSID){
-                //connect5(item,wifi!!)
-                connect4(item)
-                break
-            }
-        }*/
-
-        //connect2()
     }
+
+    var networkSSID = "MGTS_GPON5_1767"
+    var networkPass = "ABFXKVEZ"
+
+    /*var networkSSID = "AndroidDeveloper"
+    var networkPass = "Balaev1148"*/
 
     @RequiresApi(Build.VERSION_CODES.Q)
     fun connectToWiFi(pin: String, ssid:String) {
@@ -394,7 +417,7 @@ class MainActivity2 : AppCompatActivity() {
         }
     }
 
-    override fun onPause() {
+    /*override fun onPause() {
         unregisterReceiver(wifiReciever)
         super.onPause()
     }
@@ -402,7 +425,7 @@ class MainActivity2 : AppCompatActivity() {
     override fun onResume() {
         registerReceiver(wifiReciever, IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION))
         super.onResume()
-    }
+    }*/
 
 
     inner class WifiScanReceiver : BroadcastReceiver() {
@@ -414,7 +437,7 @@ class MainActivity2 : AppCompatActivity() {
             }
             lv?.adapter = ArrayAdapter<String>(
                 applicationContext,
-                R.layout.simple_list_item_1,
+                android.R.layout.simple_list_item_1,
                 wifis
             )
         }

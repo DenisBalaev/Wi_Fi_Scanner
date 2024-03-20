@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <Button
+        android:id="@+id/btn_menu_open"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Меню"
+        android:textSize="30sp"
+        android:textAllCaps="true"
+        android:drawableStart="@drawable/ic_menu_btn"
+        android:drawablePadding="22dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="13dp"
+        android:scaleType="fitCenter"
+        style="@style/ButtonCustom"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_authorization"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="3dp"
+        />
+
+    <Button
+        android:id="@+id/btn_authorization"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Гость"
+        android:textSize="30sp"
+        android:textAllCaps="true"
+        android:drawableStart="@drawable/ic_authorization_btn"
+        android:drawablePadding="22dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="13dp"
+        android:scaleType="fitCenter"
+        style="@style/ButtonCustom"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginStart="27dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_menu_open"
+        />
+
+    <TextView
+        android:id="@+id/tv_title_operating_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Режим работы установки"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_menu_open"
+        app:layout_constraintBottom_toTopOf="@+id/iv_heating_mode"
+        />
+
+    <ImageView
+        android:id="@+id/iv_heating_mode"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="38dp"
+        android:src="@drawable/ic_heating_mode"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_operating_mode"
+        app:layout_constraintBottom_toTopOf="@+id/tv_title_control_temperature"
+        />
+
+    <ImageView
+        android:id="@+id/iv_cooling_mode"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_cooling_mode"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/iv_heating_mode"
+        app:layout_constraintTop_toTopOf="@id/iv_heating_mode"
+        app:layout_constraintEnd_toStartOf="@id/iv_humidifier_operation"
+        />
+
+    <ImageView
+        android:id="@+id/iv_humidifier_operation"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_humidifier_operation"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/iv_cooling_mode"
+        app:layout_constraintTop_toTopOf="@id/iv_heating_mode"
+        app:layout_constraintEnd_toStartOf="@id/iv_dehumidification_mode"
+        />
+
+    <ImageView
+        android:id="@+id/iv_dehumidification_mode"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_dehumidification_mode"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="38dp"
+        app:layout_constraintTop_toTopOf="@id/iv_heating_mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
+        />
+
+    <TextView
+        android:id="@+id/tv_title_control_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Температура регулирования"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_dehumidification_mode"
+        app:layout_constraintBottom_toTopOf="@+id/tv_general_temperature"
+        />
+
+    <TextView
+        android:id="@+id/tv_general_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:layout_marginStart="32dp"
+        android:text="23.5"
+        android:textColor="#00A658"
+        android:textSize="100sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_control_temperature"
+        app:layout_constraintBottom_toTopOf="@+id/tv_installation_status"/>
+
+    <TextView
+        android:id="@+id/tv_setpoint_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
+        android:text="23.9"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_general_temperature"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_general_temperature"
+        app:layout_constraintHorizontal_bias="1"/>
+
+    <ImageView
+        android:id="@+id/iv_type_temperature"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="35dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_temperature_sat"
+        app:layout_constraintBottom_toTopOf="@+id/tv_setpoint_temperature"
+        app:layout_constraintStart_toEndOf="@id/tv_general_temperature"
+        app:layout_constraintTop_toTopOf="@id/tv_general_temperature" />
+
+    <TextView
+        android:id="@+id/tv_installation_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Статус установки"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_general_temperature"
+        app:layout_constraintBottom_toTopOf="@+id/iv_on_off"
+        />
+
+    <ImageView
+        android:id="@+id/iv_on_off"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="55dp"
+        android:src="@drawable/ic_on_off"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_installation_status"
+        app:layout_constraintBottom_toTopOf="@+id/tv_current_parameters"
+        />
+
+    <ImageView
+        android:id="@+id/iv_scheduled_work"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_scheduled_work"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/iv_on_off"
+        app:layout_constraintTop_toTopOf="@id/iv_on_off"
+        app:layout_constraintEnd_toStartOf="@id/iv_refusal"
+        />
+
+    <ImageView
+        android:id="@+id/iv_refusal"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_refusal"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="55dp"
+        app:layout_constraintTop_toTopOf="@id/iv_on_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_current_parameters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Текущие параметры"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_on_off"
+        app:layout_constraintBottom_toTopOf="@+id/iv_temperature_ext"
+        />
+
+    <ImageView
+        android:id="@+id/iv_temperature_ext"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="35dp"
+        android:src="@drawable/ic_temperature_ext"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_parameters"
+        app:layout_constraintBottom_toTopOf="@+id/tv_temperature_ext"
+        />
+
+    <TextView
+        android:id="@+id/tv_temperature_ext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-12.3"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#00A658"
+        app:layout_constraintStart_toStartOf="@id/iv_temperature_ext"
+        app:layout_constraintEnd_toEndOf="@id/iv_temperature_ext"
+        app:layout_constraintTop_toBottomOf="@id/iv_temperature_ext"
+        app:layout_constraintBottom_toTopOf="@+id/tv_status_installation_components"
+        />
+
+    <ImageView
+        android:id="@+id/iv_temperature_rwt"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_temperature_rwt"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/iv_temperature_ext"
+        app:layout_constraintTop_toTopOf="@id/iv_temperature_ext"
+        app:layout_constraintEnd_toStartOf="@id/iv_temperature_air_ret"
+        />
+
+    <TextView
+        android:id="@+id/tv_temperature_rwt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="68.9"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#00A658"
+        app:layout_constraintEnd_toEndOf="@id/iv_temperature_rwt"
+        app:layout_constraintStart_toStartOf="@id/iv_temperature_rwt"
+        app:layout_constraintTop_toTopOf="@+id/tv_temperature_ext"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_temperature_ext"
+        />
+
+    <ImageView
+        android:id="@+id/iv_temperature_air_ret"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_temperature_air_ret"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/iv_temperature_rwt"
+        app:layout_constraintTop_toTopOf="@+id/iv_temperature_ext"
+        app:layout_constraintEnd_toStartOf="@id/iv_temperature_air_eat"
+        />
+
+    <TextView
+        android:id="@+id/tv_temperature_air_ret"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="68.9"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#00A658"
+        app:layout_constraintEnd_toEndOf="@id/iv_temperature_air_ret"
+        app:layout_constraintStart_toStartOf="@id/iv_temperature_air_ret"
+        app:layout_constraintTop_toTopOf="@+id/tv_temperature_ext"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_temperature_ext"
+        android:visibility="invisible"
+        />
+
+    <ImageView
+        android:id="@+id/iv_temperature_air_eat"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="35dp"
+        android:src="@drawable/iv_temperature_air_eat"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_temperature_ext"
+        />
+
+    <TextView
+        android:id="@+id/tv_temperature_air_eat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="68.9"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#00A658"
+        app:layout_constraintEnd_toEndOf="@id/iv_temperature_air_eat"
+        app:layout_constraintStart_toStartOf="@id/iv_temperature_air_eat"
+        app:layout_constraintTop_toTopOf="@+id/tv_temperature_ext"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_temperature_ext"
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:id="@+id/tv_status_installation_components"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Режим работы установки"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_temperature_ext"
+        app:layout_constraintBottom_toTopOf="@id/iv_fan"
+        />
+
+    <ImageView
+        android:id="@+id/iv_fan"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="33dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_fan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="12dp"/>
+
+    <ImageView
+        android:id="@+id/iv_mode_liquid_exchanger"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_mode_liquid_exchanger"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/iv_fan"
+        app:layout_constraintTop_toTopOf="@id/iv_fan"
+        app:layout_constraintEnd_toStartOf="@id/iv_dx_cooling"
+        />
+
+    <ImageView
+        android:id="@+id/iv_dx_cooling"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_mode_liquid_exchanger"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/iv_mode_liquid_exchanger"
+        app:layout_constraintTop_toTopOf="@id/iv_fan"
+        app:layout_constraintEnd_toStartOf="@id/iv_circulation_pump"
+        />
+
+    <ImageView
+        android:id="@+id/iv_circulation_pump"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_mode_liquid_exchanger"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/iv_dx_cooling"
+        app:layout_constraintTop_toTopOf="@id/iv_fan"
+        app:layout_constraintEnd_toStartOf="@id/iv_air_dampers"
+        />
+    <ImageView
+        android:id="@+id/iv_air_dampers"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:src="@drawable/ic_mode_liquid_exchanger"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@id/iv_circulation_pump"
+        app:layout_constraintTop_toTopOf="@id/iv_fan"
+        app:layout_constraintEnd_toStartOf="@id/iv_recirculator"
+        />
+    <ImageView
+        android:id="@+id/iv_recirculator"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="33dp"
+        android:src="@drawable/ic_mode_liquid_exchanger"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="@id/iv_fan"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
