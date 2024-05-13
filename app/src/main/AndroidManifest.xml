@@ -25,6 +25,9 @@
             android:name=".WiFiActivity"
             android:exported="false" />
         <activity
+            android:name=".PultActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
@@ -34,7 +37,7 @@
             android:name=".MainActivity2"
             android:exported="false" />
         <activity
-            android:name=".PultActivity"
+            android:name=".UntilLibaryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true">
             <intent-filter>
