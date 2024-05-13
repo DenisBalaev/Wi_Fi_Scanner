@@ -24,7 +24,8 @@ class WifiAndroid10(private val context: Context) {
         Без подключения к интеренту
     */
     @RequiresApi(Build.VERSION_CODES.Q)
-    fun connecting(ssid:String, password:String,resultLauncher:ActivityResultLauncher<Intent>){
+    fun connecting(ssid:String, password:String,resultLauncher:ActivityResultLauncher<Intent>? = null){
+        (this.context.getSystemService(Context.WIFI_SERVICE) as? WifiManager)?.apply { isWifiEnabled = true /*or false*/ }
         val builder = WifiNetworkSpecifier.Builder()
         builder.setSsid(ssid)
         builder.setWpa2Passphrase(password)
@@ -54,7 +55,6 @@ class WifiAndroid10(private val context: Context) {
             (this.context.getSystemService(Context.WIFI_SERVICE) as? WifiManager)?.apply { isWifiEnabled = true /*or false*/ }
         }*/
 
-        (this.context.getSystemService(Context.WIFI_SERVICE) as? WifiManager)?.apply { isWifiEnabled = true /*or false*/ }
         //cm.unregisterNetworkCallback(networkCallback) Отключитесь от привязанной сети:
     }
 
@@ -68,7 +68,7 @@ class WifiAndroid10(private val context: Context) {
         с подключением к интернету
     */
     @RequiresApi(Build.VERSION_CODES.Q)
-    fun connectingNetworkYes(ssid:String, password:String,resultLauncher:ActivityResultLauncher<Intent>){
+    fun connectingNetworkYes(ssid:String, password:String,resultLauncher:ActivityResultLauncher<Intent>? = null){
         val suggestion1 = WifiNetworkSuggestion.Builder()
             .setSsid(ssid)
             .setIsAppInteractionRequired(true) // Optional (Needs location permission)
