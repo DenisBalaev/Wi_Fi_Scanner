@@ -25,7 +25,6 @@ class UntilLibaryActivity : AppCompatActivity(R.layout.activity_until_libary) {
 
     private val viewBinding by viewBinding(ActivityUntilLibaryBinding::bind)
 
-    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

@@ -1,17 +1,22 @@
 package com.example.wi_fi_scanner.broadcastresiver
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.*
 import android.net.wifi.WifiManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.wi_fi_scanner.R
 import com.example.wi_fi_scanner.databinding.ActivityEnabledWiFiBroadcastResiverMainBinding
+import hilt_aggregated_deps._dagger_hilt_android_flags_HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule
 
 class EnabledWiFiBroadcastResiverMainActivity :
     AppCompatActivity(R.layout.activity_enabled_wi_fi_broadcast_resiver_main) {
@@ -41,9 +46,47 @@ class EnabledWiFiBroadcastResiverMainActivity :
             .build()
         val wifiNetworkCallback = WifiNetworkCallback(applicationContext)
         connectivityManager.registerNetworkCallback(networkRequest, wifiNetworkCallback)
+
+        /*val request = NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .removeCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
+
+        val networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                Toast.makeText(applicationContext, "onAvailable", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onUnavailable() {
+                Toast.makeText(applicationContext, "onUnavailable", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onLost(network: Network) {
+                Toast.makeText(applicationContext, "onLost", Toast.LENGTH_SHORT).show()
+            }
+        }
+        connectivityManager.requestNetwork(request, networkCallback,1000)*/
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    fun isInternetAvailable(): Boolean {
+        var result = false
+        val networkCapabilities = connectivityManager.activeNetwork ?: return false
+        val actNw = connectivityManager.getNetworkCapabilities(networkCapabilities) ?: return false
+        result = when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            else -> false
+        }
+
+        return result
     }
 
 }
+
+
 
 class WifiStateReceiver : BroadcastReceiver() {
 
